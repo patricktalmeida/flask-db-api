@@ -1,0 +1,32 @@
+version: '3'
+services:
+  flask-db-app:
+    depends_on: 
+      - 'mysql'
+    container_name: flask-db-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: flask-db-app:latest
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASS=root
+    ports:
+      - 5000:5000
+    restart: always
+    networks:
+      - internal
+
+  mysql:
+    container_name: mysql
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    networks: 
+      - internal
+
+networks:
+    internal:
+      driver: bridge
