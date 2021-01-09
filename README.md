@@ -37,3 +37,12 @@ curl 'localhost:5000/authors/1'
 ```bash
 curl 'localhost:5000/quotes'
 ```
+
+### Endpoints
+
+- **GET endpoints**
+ - `/authors/<id>`
+ - `/quotes/<id>`
+ - `/quotes/`
+- **POST endpoits**
+ - `/quotes/`
