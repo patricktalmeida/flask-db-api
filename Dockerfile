@@ -1,6 +1,6 @@
 FROM python:3.8-slim-buster
 
-ADD app/requirements.txt /app/requirements.txt
+ADD src/requirements.txt /app/requirements.txt
 
 WORKDIR /app
 
