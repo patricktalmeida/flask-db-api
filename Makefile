@@ -1,5 +1,5 @@
 .PHONY: build
-create:
+build:
 	docker-compose build
 
 .PHONY: create
