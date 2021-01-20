@@ -7,6 +7,7 @@
 - curl
 
 ```bash
+make build
 make create
 ```
 ## Input example data

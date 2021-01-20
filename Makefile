@@ -1,3 +1,7 @@
+.PHONY: build
+create:
+	docker-compose build
+
 .PHONY: create
 create:
 	docker-compose up -d
