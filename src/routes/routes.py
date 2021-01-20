@@ -76,4 +76,4 @@ def new_quote():
     db.session.commit()
     result = quote_schema.dump(Quote.query.get(quote.id))
 
-    return {"message": "Created new quote.", "quote": result}
+    return {"message": "Created new quote.", "quote": result}, 201
