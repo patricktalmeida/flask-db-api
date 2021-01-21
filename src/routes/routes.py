@@ -1,6 +1,7 @@
 import datetime
 
 from flask import request
+from classes import DBDownException
 from sqlalchemy.exc import IntegrityError
 from marshmallow import ValidationError
 from classes import db, app, Author, AuthorSchema, Quote, QuoteSchema
@@ -9,6 +10,17 @@ author_schema = AuthorSchema()
 authors_schema = AuthorSchema(many=True)
 quote_schema = QuoteSchema()
 quotes_schema = QuoteSchema(many=True, only=("id", "content"))
+
+@app.route("/healthcheck")
+def healthcheck():
+    is_db_up = True
+
+    try:
+        db.session.execute('SELECT 1')
+    except:
+        is_db_up = False
+        raise DBDownException
+    return 'API is ready to recieve connections!', 200
 
 @app.route("/authors")
 def get_authors():

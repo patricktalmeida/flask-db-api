@@ -7,7 +7,9 @@ from flask_sqlalchemy import SQLAlchemy
 from marshmallow import Schema, fields, ValidationError, pre_load
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+mysqlconnector://root:root@mysql/author'
+db_config_host = os.getenv('DB_HOST')
+app.config["SQLALCHEMY_DATABASE_URI"] = f'mysql+mysqlconnector://root:root@{db_config_host}/author'
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 ##### MODELS #####
