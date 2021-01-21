@@ -47,3 +47,9 @@ curl 'localhost:5000/quotes'
  - `/quotes/`
 - **POST endpoits**
  - `/quotes/`
+
+## How to run Unit Tests
+
+```bash
+./run_tests.sh
+```
