@@ -17,7 +17,6 @@ def must_not_be_blank(data):
     if not data:
         raise ValidationError("Data not provided.")
 
-
 class QuoteSchema(Schema):
     id = fields.Int(dump_only=True)
     author = fields.Nested(AuthorSchema, validate=must_not_be_blank)
