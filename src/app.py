@@ -1,9 +1,22 @@
 import time
+import os
+import sys
+sys.path.append("..")
 
-from classes import db, app, CreateDB
-from routes import *
+from routes import blue_print
+from models import db, configure
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
-if __name__ == "__main__":
-    db.create_all()
+def create_app():
+    app = Flask(__name__)
+    db_config_host = os.getenv('DB_HOST')
+    app.config["SQLALCHEMY_DATABASE_URI"] = f'mysql+mysqlconnector://root:root@{db_config_host}/author'
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    configure(app)
+    app.register_blueprint(blue_print)
+    
+    with app.app_context():
+        db.create_all()
 
-    app.run(debug=True, port=5000, host='0.0.0.0')
+    return app

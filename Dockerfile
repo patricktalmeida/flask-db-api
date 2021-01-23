@@ -10,5 +10,7 @@ ADD ./* /app/
 
 EXPOSE 5000
 
-# python3 command runs db.create_all()
-CMD ["python3", "app.py"]
+ENV FLASK_APP=app.py
+ENV FLASK_DEBUG=1
+
+CMD [ "flask", "run", "--host=0.0.0.0" ]
