@@ -4,7 +4,7 @@ import sys
 sys.path.append("..")
 
 from routes import blue_print
-from classes import configure, db
+from models import db, configure
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 

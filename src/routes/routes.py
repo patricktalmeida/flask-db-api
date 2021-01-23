@@ -6,7 +6,8 @@ from flask import request
 from classes import DBDownException
 from sqlalchemy.exc import IntegrityError
 from marshmallow import ValidationError
-from classes import Author, AuthorSchema, Quote, QuoteSchema, db
+from schemas import AuthorSchema, QuoteSchema
+from models import Author, Quote, db
 from flask import Blueprint
 
 blue_print = Blueprint('app', __name__)
