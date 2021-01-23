@@ -9,6 +9,8 @@ RUN pip install -r requirements.txt
 ADD ./* /app/
 
 EXPOSE 5000
-
+ENV FLASK_APP=app.py
+ENV FLASK_DEBUG=1
 # python3 command runs db.create_all()
-CMD ["python3", "app.py"]
+# CMD ["python3", "main.py"]
+CMD [ "flask", "run", "--host=0.0.0.0" ]

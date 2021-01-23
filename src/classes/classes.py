@@ -1,16 +1,18 @@
 import os
 import mysql.connector
 import logging
+import sys
+sys.path.append("..")
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow import Schema, fields, ValidationError, pre_load
+# from main import app, db
 
-app = Flask(__name__)
-db_config_host = os.getenv('DB_HOST')
-app.config["SQLALCHEMY_DATABASE_URI"] = f'mysql+mysqlconnector://root:root@{db_config_host}/author'
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db = SQLAlchemy(app)
+db = SQLAlchemy()
+def configure(app):
+    db.init_app(app)
+    app.db = db
 
 ##### MODELS #####
 class CreateDB:
