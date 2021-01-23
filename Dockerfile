@@ -11,4 +11,4 @@ ADD ./* /app/
 EXPOSE 5000
 
 # python3 command runs db.create_all()
-CMD ["python3", "app.py", "&&", "gunicorn", "--log-level", "debug", "--bind", "0.0.0.0:5000", "app:app" ]
+CMD ["python3", "app.py"]
