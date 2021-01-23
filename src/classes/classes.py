@@ -7,7 +7,6 @@ sys.path.append("..")
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow import Schema, fields, ValidationError, pre_load
-# from main import app, db
 
 db = SQLAlchemy()
 def configure(app):

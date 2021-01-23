@@ -6,17 +6,16 @@ from flask import request
 from classes import DBDownException
 from sqlalchemy.exc import IntegrityError
 from marshmallow import ValidationError
-from classes import Author, AuthorSchema, Quote, QuoteSchema
+from classes import Author, AuthorSchema, Quote, QuoteSchema, db
 from flask import Blueprint
 
-bp = Blueprint('app', __name__)
-
+blue_print = Blueprint('app', __name__)
 author_schema = AuthorSchema()
 authors_schema = AuthorSchema(many=True)
 quote_schema = QuoteSchema()
 quotes_schema = QuoteSchema(many=True, only=("id", "content"))
 
-@bp.route("/healthcheck")
+@blue_print.route("/healthcheck")
 def healthcheck():
     is_db_up = True
 
@@ -27,7 +26,7 @@ def healthcheck():
         raise DBDownException
     return 'API is ready to recieve connections!', 200
 
-@bp.route("/authors")
+@blue_print.route("/authors")
 def get_authors():
     authors = Author.query.all()
     # Serialize the queryset
@@ -35,7 +34,7 @@ def get_authors():
 
     return {"authors": result}
 
-@bp.route("/authors/<int:pk>")
+@blue_print.route("/authors/<int:pk>")
 def get_author(pk):
     try:
         author = Author.query.get(pk)
@@ -47,14 +46,14 @@ def get_author(pk):
 
     return {"author": author_result, "quotes": quotes_result}
 
-@bp.route("/quotes/", methods=["GET"])
+@blue_print.route("/quotes/", methods=["GET"])
 def get_quotes():
     quotes = Quote.query.all()
     result = quotes_schema.dump(quotes, many=True)
 
     return {"quotes": result}
 
-@bp.route("/quotes/<int:pk>")
+@blue_print.route("/quotes/<int:pk>")
 def get_quote(pk):
     try:
         quote = Quote.query.get(pk)
@@ -65,7 +64,7 @@ def get_quote(pk):
 
     return {"quote": result}
 
-@bp.route("/quotes/", methods=["POST"])
+@blue_print.route("/quotes/", methods=["POST"])
 def new_quote():
     json_data = request.get_json()
     

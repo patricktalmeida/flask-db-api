@@ -3,7 +3,7 @@ import os
 import sys
 sys.path.append("..")
 
-from routes import bp
+from routes import blue_print
 from classes import configure, db
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -14,7 +14,7 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = f'mysql+mysqlconnector://root:root@{db_config_host}/author'
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     configure(app)
-    app.register_blueprint(bp)
+    app.register_blueprint(blue_print)
     
     with app.app_context():
         db.create_all()
