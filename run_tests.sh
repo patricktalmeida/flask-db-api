@@ -2,11 +2,5 @@
 
 set -euo pipefail
 
-pushd src/tests/
-
-listed_tests=$(ls *.py)
-for test_case in $listed_tests; do
-    python3 $test_case
-done
-
-popd
+docker-compose build
+docker run --rm -it flask-db-app:latest python -m unittest discover -s tests -p 'test_*.py'
