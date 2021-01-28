@@ -1,10 +1,8 @@
 import time
 import os
-import sys
-sys.path.append("..")
 
-from routes import blue_print
-from models import db, configure
+from app.routes.routes import blue_print
+from app.models.models import db, configure
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 

@@ -1,14 +1,12 @@
 import datetime
-import sys
-sys.path.append("..")
 
 from flask import request
-from classes import DBDownException
 from sqlalchemy.exc import IntegrityError
-from marshmallow import ValidationError
-from schemas import AuthorSchema, QuoteSchema
-from models import Author, Quote, db
 from flask import Blueprint
+from marshmallow import ValidationError
+from app.classes.exeptions import DBDownException
+from app.schemas.schemas import AuthorSchema, QuoteSchema
+from app.models.models import Author, Quote, db
 
 blue_print = Blueprint('app', __name__)
 author_schema = AuthorSchema()
