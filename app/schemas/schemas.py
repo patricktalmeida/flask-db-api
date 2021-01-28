@@ -1,6 +1,3 @@
-import sys
-sys.path.append("..")
-
 from marshmallow import Schema, fields, ValidationError, pre_load
 
 class AuthorSchema(Schema):

@@ -3,7 +3,7 @@ import sys
 sys.path.append("..")
 
 from mock.mock_test_routes import TestRoutesMock
-from routes import get_authors, get_author, get_quote, get_quotes
+from app.routes import get_authors, get_author, get_quote, get_quotes
 
 class TestRoutes(unittest.TestCase):
     """
@@ -16,7 +16,6 @@ class TestRoutes(unittest.TestCase):
         self.assertTrue(str(author["author"]["formatted_name"]))
         self.assertTrue(str(author["author"]["id"]))
         self.assertTrue(str(author["author"]["last"]))
-
 
 if __name__ == '__main__':
     unittest.main()
