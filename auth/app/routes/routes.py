@@ -1,13 +1,15 @@
-import datetime
-
+from flask import current_app
+from jwt import PyJWT as jwt
+from datetime import datetime, timedelta
 from flask import Blueprint, request, jsonify
-from marshmallow import ValidationError
 from app.classes.exeptions import DBDownException
+from app.classes.errors import PasswordValidationError
 from app.schemas.schemas import UserSchema
 from app.models.models import User, db
 
 blue_print = Blueprint('app', __name__)
 user_schema = UserSchema()
+users_schema = UserSchema(many=True)
 
 @blue_print.route("/auth/healthcheck")
 def healthcheck():
@@ -35,10 +37,29 @@ def register_user():
     db.session.add(user)
     db.session.commit()
 
-    result = User.query.filter_by(email=email).first()
+    result = user_schema.dump(
+        User.query.filter_by(email=email).first()
+    )
 
     return jsonify(result), 201
 
-# @blue_print.route("/auth/login", methods=['POST'])
-# def login_user():
-#     pass
+@blue_print.route("/auth/login", methods=['POST'])
+def login_user():
+    email = request.json['email']
+    password = request.json['password']
+
+    user = User.query.filter_by(email=email).first_or_404()
+
+    if not user.verify_password(password):
+        return jsonify({
+            "error": "Incorrect password"
+        }), 403
+
+    payload = {
+        "id": user.id,
+        "exp": datetime.utcnow() + timedelta(hours=12)
+    }
+
+    token = jwt.encode(self=None, payload=payload, key=current_app.config['JWT_SECRET_KEY'])
+
+    return jsonify({"token": token}), 200

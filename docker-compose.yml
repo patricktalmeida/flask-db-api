@@ -30,7 +30,7 @@ services:
       - DB_HOST=mysql
       - DB_USER=root
       - DB_PASS=root
-      - AUTH_SECRET_KEY=secret
+      - JWT_SECRET_KEY=secret
     expose:
       - 5000
     restart: always
