@@ -18,6 +18,25 @@ services:
     networks:
       - internal
 
+  flask-auth-app:
+    depends_on:
+      - 'mysql'
+    container_name: flask-auth-app
+    build:
+      context: auth/
+      dockerfile: Dockerfile
+    image: flask-auth-app:latest
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASS=root
+      - AUTH_SECRET_KEY=secret
+    expose:
+      - 5000
+    restart: always
+    networks:
+      - internal
+
   mysql:
     container_name: mysql
     image: mysql:8.0
