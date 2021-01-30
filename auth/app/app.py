@@ -11,7 +11,7 @@ def create_app():
     db_config_user = os.getenv('DB_USER')
     db_config_pass = os.getenv('DB_PASS')
     app_secret_key = os.getenv('AUTH_SECRET_KEY')
-    app.config['JWT_SECRET_KEY'] = app_secret_key
+    app.config['AUTH_SECRET_KEY'] = app_secret_key
     app.config["SQLALCHEMY_DATABASE_URI"] = f'mysql+mysqlconnector://{db_config_user}:{db_config_pass}@{db_config_host}/author'
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 

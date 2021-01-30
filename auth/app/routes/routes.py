@@ -3,9 +3,9 @@ from jwt import PyJWT as jwt
 from datetime import datetime, timedelta
 from flask import Blueprint, request, jsonify
 from app.classes.exeptions import DBDownException
-from app.classes.errors import PasswordValidationError
 from app.schemas.schemas import UserSchema
 from app.models.models import User, db
+from app.helpers.authenticator import jwt_required
 
 blue_print = Blueprint('app', __name__)
 user_schema = UserSchema()
@@ -60,6 +60,19 @@ def login_user():
         "exp": datetime.utcnow() + timedelta(hours=12)
     }
 
-    token = jwt.encode(self=None, payload=payload, key=current_app.config['JWT_SECRET_KEY'])
+    token = jwt.encode(
+        self=None,
+        payload=payload,
+        key=current_app.config['AUTH_SECRET_KEY']
+    )
 
     return jsonify({"token": token}), 200
+
+@blue_print.route("/auth/protected")
+@jwt_required
+def protected_example_route():
+    result = users_schema.dump(
+        User.query.all()
+    )
+
+    return jsonify(result)
