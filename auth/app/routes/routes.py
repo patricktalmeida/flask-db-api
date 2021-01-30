@@ -20,13 +20,25 @@ def healthcheck():
         raise DBDownException
     return 'API is ready to recieve connections!', 200
 
-# @blue_print.route("/auth/register", methods=['POST'])
-# def register_user():
-#     return jsonify({"teste": "ok"}), 200
 @blue_print.route("/auth/register", methods=['POST'])
 def register_user():
-    pass
+    username = request.json['username']
+    email = request.json['email']
+    password = request.json['password']
 
-@blue_print.route("/auth/login", methods=['POST'])
-def login_user():
-    pass
+    user = User(
+        username,
+        email,
+        password
+    )
+
+    db.session.add(user)
+    db.session.commit()
+
+    result = User.query.filter_by(email=email).first()
+
+    return jsonify(result), 201
+
+# @blue_print.route("/auth/login", methods=['POST'])
+# def login_user():
+#     pass
