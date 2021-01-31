@@ -5,15 +5,35 @@ services:
       - 'mysql'
     container_name: flask-db-app
     build:
-      context: .
+      context: authors/
       dockerfile: Dockerfile
     image: flask-db-app:latest
     environment:
       - DB_HOST=mysql
       - DB_USER=root
       - DB_PASS=root
-    ports:
-      - 5000:5000
+      - AUTH_SECRET_KEY=secret
+    expose: 
+      - 5000
+    restart: always
+    networks:
+      - internal
+
+  flask-auth-app:
+    depends_on:
+      - 'mysql'
+    container_name: flask-auth-app
+    build:
+      context: auth/
+      dockerfile: Dockerfile
+    image: flask-auth-app:latest
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASS=root
+      - AUTH_SECRET_KEY=secret
+    expose:
+      - 5000
     restart: always
     networks:
       - internal
@@ -27,6 +47,18 @@ services:
       - MYSQL_DATABASE=author
     networks: 
       - internal
+
+  nginx:
+    container_name: nginx-lb
+    build:
+      context: nginx/
+      dockerfile: Dockerfile
+    image: nginx-lb:latest
+    ports: 
+      - 80:80
+    restart: always
+    networks:
+      - internal 
 
 networks:
     internal:

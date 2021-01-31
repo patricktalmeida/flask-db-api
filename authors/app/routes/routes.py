@@ -1,20 +1,24 @@
 import datetime
 
-from flask import request
 from sqlalchemy.exc import IntegrityError
-from flask import Blueprint
+from flask import Blueprint, request, jsonify
 from marshmallow import ValidationError
 from app.classes.exeptions import DBDownException
 from app.schemas.schemas import AuthorSchema, QuoteSchema
 from app.models.models import Author, Quote, db
+from app.schemas.schemas import UserSchema
+from app.models.models import User, db
+from app.helpers.authenticator import jwt_required
 
 blue_print = Blueprint('app', __name__)
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
 author_schema = AuthorSchema()
 authors_schema = AuthorSchema(many=True)
 quote_schema = QuoteSchema()
 quotes_schema = QuoteSchema(many=True, only=("id", "content"))
 
-@blue_print.route("/healthcheck")
+@blue_print.route("/api/healthcheck")
 def healthcheck():
     is_db_up = True
 
@@ -25,7 +29,8 @@ def healthcheck():
         raise DBDownException
     return 'API is ready to recieve connections!', 200
 
-@blue_print.route("/authors")
+@blue_print.route("/api/authors")
+@jwt_required
 def get_authors():
     authors = Author.query.all()
     # Serialize the queryset
@@ -33,7 +38,8 @@ def get_authors():
 
     return {"authors": result}
 
-@blue_print.route("/authors/<int:pk>")
+@blue_print.route("/api/authors/<int:pk>")
+@jwt_required
 def get_author(pk):
     try:
         author = Author.query.get(pk)
@@ -45,14 +51,16 @@ def get_author(pk):
 
     return {"author": author_result, "quotes": quotes_result}
 
-@blue_print.route("/quotes/", methods=["GET"])
+@blue_print.route("/api/quotes", methods=["GET"])
+@jwt_required
 def get_quotes():
     quotes = Quote.query.all()
     result = quotes_schema.dump(quotes, many=True)
 
     return {"quotes": result}
 
-@blue_print.route("/quotes/<int:pk>")
+@blue_print.route("/api/quotes/<int:pk>")
+@jwt_required
 def get_quote(pk):
     try:
         quote = Quote.query.get(pk)
@@ -63,14 +71,15 @@ def get_quote(pk):
 
     return {"quote": result}
 
-@blue_print.route("/quotes/", methods=["POST"])
+@blue_print.route("/api/quotes", methods=["POST"])
+@jwt_required
 def new_quote():
     json_data = request.get_json()
     
     if not json_data:
         return {"message": "No input data provided"}, 400
 
-    # Validate and deserialize input    
+    # Validate and deserialize input
     try:
         data = quote_schema.load(json_data)
     except ValidationError as err:
@@ -89,6 +98,30 @@ def new_quote():
     )
     db.session.add(quote)
     db.session.commit()
-    result = quote_schema.dump(Quote.query.get(quote.id))
+    result = quote_schema.dump(
+        Quote.query.get(quote.id)
+    )
 
     return {"message": "Created new quote.", "quote": result}, 201
+
+@blue_print.route("/api/register", methods=['POST'])
+def register_user():
+    username = request.json['username']
+    email = request.json['email']
+    password = request.json['password']
+
+    user = User(
+        username,
+        email,
+        password
+    )
+
+    db.session.add(user)
+    db.session.commit()
+
+    # serialize queryset
+    result = user_schema.dump(
+        User.query.filter_by(email=email).first()
+    )
+
+    return jsonify(result), 201

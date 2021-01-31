@@ -33,3 +33,7 @@ class QuoteSchema(Schema):
         data["author"] = author_dict
 
         return data
+
+class UserSchema(Schema):
+    class Meta:
+        fields = ('id', 'username', 'email')
