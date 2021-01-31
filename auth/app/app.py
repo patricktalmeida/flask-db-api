@@ -1,7 +1,6 @@
 import os
 
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from app.models.models import db, configure
 from app.routes.routes import blue_print
 

@@ -1,4 +1,5 @@
 import jwt
+from base64 import b64decode
 from functools import wraps
 from flask import request, jsonify, current_app
 from app.models.models import User
@@ -25,7 +26,7 @@ def jwt_required(f):
             token_hash = token.replace("Bearer ", "")
             decoded_token = jwt.decode(
                 token_hash,
-                current_app.config['AUTH_SECRET_KEY'],
+                str(current_app.config['AUTH_SECRET_KEY']),
                 algorithms="HS256"
             )
             current_user = User.query.get(decoded_token['id'])
