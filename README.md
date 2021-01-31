@@ -80,9 +80,10 @@ curl 'localhost/api/quotes'
 ## How to run Unit Tests
 
 ```bash
-./run_tests.sh
+./authors/run_tests.sh
 ```
 
 ### TODO
 
 - Add queue on `/api/register` and `/api/quotes`.
+- Add services more tests.
