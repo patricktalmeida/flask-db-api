@@ -13,4 +13,4 @@ EXPOSE 5000
 ENV FLASK_APP=app.py
 ENV FLASK_DEBUG=1
 
-CMD [ "flask", "run", "--host=0.0.0.0" ]
+ENTRYPOINT [ "gunicorn", "--log-level", "debug", "--graceful-timeout", "30", "--bind", "0.0.0.0:5000", "app:app" ]

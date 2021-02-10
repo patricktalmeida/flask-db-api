@@ -1,10 +1,13 @@
+import sys
+sys.path.append("..")
+
 from flask import current_app
 from jwt import PyJWT as jwt
 from datetime import datetime, timedelta
 from flask import Blueprint, request, jsonify
-from app.classes.exeptions import DBDownException
-from app.schemas.schemas import UserSchema
-from app.models.models import User, db
+from classes.exeptions import DBDownException
+from schemas.schemas import UserSchema
+from models.models import User, db
 
 blue_print = Blueprint('app', __name__)
 

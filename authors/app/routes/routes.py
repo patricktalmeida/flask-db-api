@@ -1,14 +1,16 @@
 import datetime
+import sys
+sys.path.append("..")
 
 from sqlalchemy.exc import IntegrityError
 from flask import Blueprint, request, jsonify
 from marshmallow import ValidationError
-from app.classes.exeptions import DBDownException
-from app.schemas.schemas import AuthorSchema, QuoteSchema
-from app.models.models import Author, Quote, db
-from app.schemas.schemas import UserSchema
-from app.models.models import User, db
-from app.helpers.authenticator import jwt_required
+from classes.exeptions import DBDownException
+from schemas.schemas import AuthorSchema, QuoteSchema
+from models.models import Author, Quote, db
+from schemas.schemas import UserSchema
+from models.models import User, db
+from helpers.authenticator import jwt_required
 
 blue_print = Blueprint('app', __name__)
 user_schema = UserSchema()

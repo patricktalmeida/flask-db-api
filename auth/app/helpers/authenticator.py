@@ -1,7 +1,10 @@
 import jwt
+import sys
+sys.path.append("..")
+
 from functools import wraps
 from flask import request, jsonify, current_app
-from app.models.models import User
+from models.models import User
 
 def jwt_required(f):
     @wraps(f)
