@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  master:
+    image: locustio/locust
+    ports:
+     - "8089:8089"
+    volumes:
+      - ./:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --master -H http://nginx-lb
+    environment:
+      - CLIENT_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjE0ODE4NTI4fQ.AAo04Oo7a8BBbONd3EdRiInrpyk7--HHHQvc8prO49U
+    networks: 
+      - default
+  
+  worker:
+    image: locustio/locust
+    volumes:
+      - ./:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --worker --master-host master
+    environment:
+      - CLIENT_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjE0ODE4NTI4fQ.AAo04Oo7a8BBbONd3EdRiInrpyk7--HHHQvc8prO49U
+    networks: 
+      - default
+
+networks:
+  default:
+    external:
+      name: flask-db-api_internal
