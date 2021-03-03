@@ -41,6 +41,11 @@ services:
   mysql:
     container_name: mysql
     image: mysql:8.0
+    healthcheck:
+      test: [ "CMD", "/usr/bin/mysql", "--host=127.0.0.1", "--user=root", "--password=root", "--execute", "SELECT 1;" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=root
@@ -53,6 +58,9 @@ services:
     build:
       context: nginx/
       dockerfile: Dockerfile
+    depends_on:
+      mysql:
+        condition: service_healthy
     image: nginx-lb:latest
     ports: 
       - 80:80
