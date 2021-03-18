@@ -49,7 +49,7 @@ curl --request 'POST' \
 curl --request 'POST' --header "Authorization: Bearer ${VALID_TOKEN}" \
 	--header 'Content-Type: application/json' \
 	--data '{"author":"User Name","content":"I love programming."}' \
-	'localhost/api/quotes/'
+	'localhost/api/quotes'
 ```
 
 ### Getting data
@@ -69,11 +69,11 @@ curl 'localhost/api/quotes'
 - **GET endpoints**
  - `/api/authors/<id>` (needs authentication)
  - `/api/quotes/<id>` (needs authentication)
- - `/api/quotes/` (needs authentication)
+ - `/api/quotes` (needs authentication)
  - `/api/healthcheck`
  - `/auth/healthcheck`
 - **POST endpoits**
- - `/api/quotes/` (needs authentication)
+ - `/api/quotes` (needs authentication)
  - `/api/register`
  - `/auth/login`
 

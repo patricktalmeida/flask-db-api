@@ -18,16 +18,16 @@ migrate:
 	curl --request 'POST' --header "Authorization: Bearer ${VALID_TOKEN}" \
 		--header 'Content-Type: application/json' \
 		--data '{"author":"John Doe","content":"Poetry is awsome."}' \
-		'localhost/api/quotes/'
+		'localhost/api/quotes'
 	curl --request 'POST' --header "Authorization: Bearer ${VALID_TOKEN}" \
 		--header 'Content-Type: application/json' \
 		--data '{"author":"John Doe","content":"Poetry is pretty awsome."}' \
-		'localhost/api/quotes/'
+		'localhost/api/quotes'
 	curl --request 'POST' --header "Authorization: Bearer ${VALID_TOKEN}" \
 		--header 'Content-Type: application/json' \
 		--data '{"author":"Jane Doe","content":"I love quoting impact phrases."}' \
-		'localhost/api/quotes/'
+		'localhost/api/quotes'
 	curl --request 'POST' --header "Authorization: Bearer ${VALID_TOKEN}" \
 		--header 'Content-Type: application/json' \
 		--data '{"author":"User Name","content":"I love programming."}' \
-		'localhost/api/quotes/'
+		'localhost/api/quotes'
