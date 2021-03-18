@@ -1,0 +1,147 @@
+{
+	"info": {
+		"_postman_id": "565763f0-fe68-4c71-962f-474168177576",
+		"name": "flask-db-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Healthcheck flask-db-api",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/api/healthcheck",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Healthcheck flask-auth-api",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/auth/healthcheck",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"auth",
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Resgistration flask-db-api",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"email@email.com\",\n    \"username\": \"Patrick Almeida\",\n    \"password\": \"12345\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/api/register",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Authors",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjEyNTc2MzkxfQ.t1nx_dAv_77_QAqNXB4QGITXjV8iu5fAD5CyILOWTe0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost/api/authors",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"authors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Quotes",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjEyNTc2MzkxfQ.t1nx_dAv_77_QAqNXB4QGITXjV8iu5fAD5CyILOWTe0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost/api/authors",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"authors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\": \"email@email.com\", \"password\": \"12345\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/auth/login",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
